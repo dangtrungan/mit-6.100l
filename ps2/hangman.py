@@ -87,8 +87,12 @@ def get_available_letters(letters_guessed):
       letters have not yet been guessed. The letters should be returned in
       alphabetical order
     """
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    available_letters = ""
+    alphabet = string.ascii_lowercase
+    for letter in alphabet:
+        if letter not in letters_guessed:
+            available_letters += letter
+    return available_letters
 
 
 
