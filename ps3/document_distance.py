@@ -69,7 +69,7 @@ def get_letter_frequencies(word):
         is a letter in word and the corresponding int
         is the frequency of the letter in word
     """
-    pass
+    return get_frequencies(word)
 
 
 ### Problem 3: Similarity ###
