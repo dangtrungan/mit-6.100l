@@ -95,6 +95,16 @@ def get_available_letters(letters_guessed):
     return available_letters
 
 
+def get_help(secret_word, available_letters):
+    choose_from = ""
+    for letter in secret_word:
+        if letter in available_letters:
+            choose_from += letter
+    new = random.randint(0, len(choose_from)-1)
+    revealed_letter = choose_from[new]
+    return revealed_letter
+
+
 
 def hangman(secret_word, with_help):
     """
@@ -149,10 +159,16 @@ def hangman(secret_word, with_help):
         print(f"You have {guesses_left} guesses left.")
         print(f"Available letters: {available_letters}")
         guess = input("Please guess a letter: ").lower()
+        hint = False
 
-        # stub for symbol !
         if with_help and guess == "!":
-            continue
+            if guesses_left < 3:
+                print(f"Oops! Not enough guesses left: {word_progress}")
+                continue
+            else:
+                guess = get_help(secret_word, available_letters)
+                guesses_left -= 3
+                hint = True
         
         if not guess.isalpha() or len(guess) != 1:
             print(f"Oops! That is not a valid letter. Please input a letter from the alphabet: {word_progress}")
@@ -166,8 +182,13 @@ def hangman(secret_word, with_help):
             print(f"Oops! You've already guessed that letter: {word_progress}")
             continue
         
-        if guess in secret_word:
+        if hint:
+            print(f"Letter revealed: {guess}")
+            print(word_progress)
+
+        elif guess in secret_word:
             print(f"Good guess: {word_progress}")
+            
         else:
             print(f"Oops! That letter is not in my word: {word_progress}")
             if guess in vowels:
@@ -182,8 +203,8 @@ def hangman(secret_word, with_help):
 if __name__ == "__main__":
     # To test your game, uncomment the following three lines.
 
-    secret_word = "tact"
-    with_help = False
+    secret_word = "racecar"
+    with_help = True
     hangman(secret_word, with_help)
 
     # After you complete with_help functionality, change with_help to True
