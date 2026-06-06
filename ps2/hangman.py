@@ -149,25 +149,36 @@ def hangman(secret_word, with_help):
     print(f"I am thinking of a word that is {len(secret_word)} letters long.")
 
     letters_guessed = ""
-    guesses_left = 10
+    guesses_remaining = 10
     available_letters = get_available_letters(letters_guessed)
     word_progress = len(secret_word) * "*"
     vowels = "aeiou"
 
-    while not has_player_won(secret_word, letters_guessed):
+    while True:
         print("--------------")
-        print(f"You have {guesses_left} guesses left.")
+
+        if has_player_won(secret_word, letters_guessed):
+            total_score = (guesses_remaining + 4 * len(set(secret_word))) + (3 * len(secret_word))
+            print("Congratulations, you won!")
+            print(f"Your total score for this game is: {total_score}")
+            break
+
+        if guesses_remaining <= 0:
+            print(f"Sorry, you ran out of guesses. The word was {secret_word}.")
+            break
+
+        print(f"You have {guesses_remaining} guesses left.")
         print(f"Available letters: {available_letters}")
         guess = input("Please guess a letter: ").lower()
         hint = False
 
         if with_help and guess == "!":
-            if guesses_left < 3:
+            if guesses_remaining < 3:
                 print(f"Oops! Not enough guesses left: {word_progress}")
                 continue
             else:
                 guess = get_help(secret_word, available_letters)
-                guesses_left -= 3
+                guesses_remaining -= 3
                 hint = True
         
         if not guess.isalpha() or len(guess) != 1:
@@ -192,9 +203,9 @@ def hangman(secret_word, with_help):
         else:
             print(f"Oops! That letter is not in my word: {word_progress}")
             if guess in vowels:
-                guesses_left -= 2
+                guesses_remaining -= 2
             else:
-                guesses_left -= 1
+                guesses_remaining -= 1
 
 
 # When you've completed your hangman function, scroll down to the bottom
@@ -203,7 +214,7 @@ def hangman(secret_word, with_help):
 if __name__ == "__main__":
     # To test your game, uncomment the following three lines.
 
-    secret_word = "racecar"
+    secret_word = choose_word(wordlist)
     with_help = True
     hangman(secret_word, with_help)
 
