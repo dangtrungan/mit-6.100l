@@ -201,7 +201,12 @@ def get_tfidf(tf_file_path, idf_file_paths):
 
         * TF-IDF(i) = TF(i) * IDF(i)
         """
-    pass
+    tf = get_tf(tf_file_path)
+    idf = get_idf(idf_file_paths)
+    tf_idf = []
+    for word in tf.keys():
+        tf_idf.append((word, tf[word] * idf[word]))
+    return sorted(tf_idf, key=lambda x: x[1])
 
 
 if __name__ == "__main__":
