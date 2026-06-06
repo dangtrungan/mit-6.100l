@@ -151,7 +151,11 @@ def get_tf(file_path):
         in the document) / (total number of words in the document)
     * Think about how we can use get_frequencies from earlier
     """
-    pass
+    word_list = text_to_list(load_file(file_path))
+    freq = get_frequencies(word_list)
+    num_words = len(word_list)
+    tf = {key: value / num_words for key, value in freq.items()}
+    return tf
 
 def get_idf(file_paths):
     """
