@@ -169,7 +169,24 @@ def get_idf(file_paths):
     with math.log10()
 
     """
-    pass
+    num_docs = len(file_paths)
+    word_list = []
+    doc_set = []
+
+    for file_path in file_paths:
+        word_set = set(text_to_list(load_file(file_path)))
+        word_list += (word for word in word_set if word not in word_list)
+        doc_set.append(word_set)
+
+    idf = {}
+    for word in word_list:
+        num_word_appearance = 0
+        for doc in doc_set:
+            if word in doc:
+                num_word_appearance += 1
+        idf[word] = math.log10(num_docs / num_word_appearance)
+
+    return idf
 
 def get_tfidf(tf_file_path, idf_file_paths):
     """
