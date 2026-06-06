@@ -142,6 +142,7 @@ def hangman(secret_word, with_help):
     guesses_left = 10
     available_letters = get_available_letters(letters_guessed)
     word_progress = len(secret_word) * "*"
+    vowels = "aeiou"
 
     while not has_player_won(secret_word, letters_guessed):
         print("--------------")
@@ -161,12 +162,18 @@ def hangman(secret_word, with_help):
             letters_guessed += guess
             available_letters = get_available_letters(letters_guessed)
             word_progress = get_word_progress(secret_word, letters_guessed)
+        else:
+            print(f"Oops! You've already guessed that letter: {word_progress}")
+            continue
         
         if guess in secret_word:
             print(f"Good guess: {word_progress}")
         else:
             print(f"Oops! That letter is not in my word: {word_progress}")
-            guesses_left -= 1
+            if guess in vowels:
+                guesses_left -= 2
+            else:
+                guesses_left -= 1
 
 
 # When you've completed your hangman function, scroll down to the bottom
