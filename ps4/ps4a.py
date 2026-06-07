@@ -34,8 +34,9 @@ def is_heap(tree, compare_func):
     Output:
         True if the entire tree satisfies the compare_func function; False otherwise
     '''
-    # TODO: Remove pass and write your code here
-    pass
+    left_check = tree.left is None or (is_heap(tree.left, compare_func) and compare_func(tree.left.value, tree.value))
+    right_check = tree.right is None or (is_heap(tree.right, compare_func) and compare_func(tree.right.value, tree.value))
+    return left_check and right_check
 
 
 
