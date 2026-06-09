@@ -103,7 +103,12 @@ def filter(pixels_list, color):
     returns: list of pixels in same format as earlier functions,
     transformed by matrix multiplication
     """
-    pass
+    transformation_matrix = make_matrix(color)
+    filtered_pixels_list = []
+    for pixel in pixels_list:
+        filtered_pixel = matrix_multiply(transformation_matrix, pixel)
+        filtered_pixels_list.append(tuple(int(i) for i in filtered_pixel))
+    return filtered_pixels_list
 
 
 def extract_end_bits(num_end_bits, pixel):
