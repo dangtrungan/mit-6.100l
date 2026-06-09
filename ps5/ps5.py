@@ -168,7 +168,11 @@ def reveal_color_image(filename):
     Returns:
         result: an Image object containing the hidden image
     """
-    pass
+    pixels_list = img_to_pix(filename)
+    pixels_list = [tuple(int(i * 256 / 7) for i in extract_end_bits(3, pixel))
+                                          for pixel in pixels_list]
+    with Image.open(filename) as im:
+        return pix_to_img(pixels_list, im.size, im.mode)
 
 
 def reveal_image(filename):
