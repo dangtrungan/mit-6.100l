@@ -89,7 +89,9 @@ def pix_to_img(pixels_list, size, mode):
     returns:
         img: Image object made from list of pixels
     """
-    pass
+    im = Image.new(mode, size)
+    im.putdata(pixels_list)
+    return im
 
 
 def filter(pixels_list, color):
