@@ -22,8 +22,10 @@ Requires Python 3.8 and `numpy`, `matplotlib`, `pillow`.
 ```bash
 git clone https://github.com/dangtrungan/mit-6.100l.git
 cd mit-6.100l
-pip install numpy matplotlib pillow
+pip install -r requirements.txt
 ```
+
+Versions are pinned in `requirements.txt` for reproducibility.
 
 ## Usage
 
